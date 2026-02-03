@@ -13,6 +13,42 @@ yarn typecheck    # Type-check all packages
 yarn lint         # Lint all packages
 ```
 
+## How to Practice
+
+### Workflow
+
+1. **Pick an exercise** from the tables below. Start with beginner, work up to advanced.
+2. **Read the README** in the exercise directory (e.g. `packages/web/src/exercises/tic-tac-toe/README.md`). It lists the goals and acceptance criteria.
+3. **Read the component file** — each placeholder has comments describing exactly what to build.
+4. **Implement it** in the placeholder component. The dev server hot-reloads, so you'll see changes instantly at the exercise's route.
+5. **Check the boxes** in the exercise README as you complete each acceptance criterion.
+6. **Fill in the docs** — after finishing an exercise, jot down what you learned in the relevant `docs/` file (state management decisions, performance techniques, TypeScript patterns, etc.). This builds your own reference sheet for interviews.
+7. **Mark the Status column** in this README with a checkmark when done.
+
+### Suggested Order
+
+**Round 1 — Fundamentals & warm-up:**
+Tic-Tac-Toe → Timer → TS Conversion → Form Wizard
+
+**Round 2 — Hooks & custom hooks:**
+Stopwatch → Debounced Search → useFetch Hook → Modal Manager
+
+**Round 3 — Performance:**
+Slow Component Opt. → Searchable List → Virtualized List
+
+**Round 4 — Advanced / system design:**
+Kanban Board → (then mobile exercises)
+
+Mobile exercises can be done in parallel or after web — they reinforce the same concepts in a React Native context.
+
+### Tips
+
+- **Time yourself.** Interview coding rounds are typically 30–45 minutes. Practice under that constraint.
+- **Talk out loud.** Narrate your decisions as you code — component breakdown, state shape, tradeoffs. This is what interviewers want to hear.
+- **Don't peek at solutions first.** Struggle with it, then review afterward. The struggle is where learning happens.
+- **Use the docs/ templates.** Writing down your component hierarchy, state shape, and data flow forces you to think clearly — exactly what you'll need to do on a whiteboard.
+- **Revisit exercises.** Try redoing earlier ones from scratch to test retention.
+
 ## Packages
 
 | Package | Description |
@@ -50,4 +86,13 @@ yarn lint         # Lint all packages
 
 ## Docs
 
-Design documents for study and review live in [`docs/`](./docs/).
+Design documents for study and review live in [`docs/`](./docs/). Fill these in as you complete exercises to build your own interview reference:
+
+| Doc | What to capture |
+|-----|-----------------|
+| [Component Hierarchy](docs/component-hierarchy.md) | Component trees, prop flow, composition decisions |
+| [State Management](docs/state-management.md) | When to use useState vs useReducer vs useContext |
+| [Data Flow](docs/data-flow.md) | Props drilling, callbacks, context patterns |
+| [Performance](docs/performance.md) | memo, useMemo, useCallback, virtualization |
+| [TypeScript Patterns](docs/types.md) | Discriminated unions, generics, utility types |
+| [Exercise Index](docs/exercise-index.md) | Quick reference and key takeaways per exercise |
