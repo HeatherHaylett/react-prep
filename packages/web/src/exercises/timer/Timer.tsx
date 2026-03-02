@@ -1,4 +1,6 @@
 import { ExerciseShell } from "../../components/ExerciseShell";
+import { formatTime } from "@react-prep/shared";
+import { useEffect, useRef, useState } from "react";
 
 // GOAL: Build a timer with start, stop, and reset
 // ACCEPTANCE CRITERIA:
@@ -10,12 +12,34 @@ import { ExerciseShell } from "../../components/ExerciseShell";
 // - Use formatTime from @react-prep/shared
 
 export default function Timer() {
+  const [time, setTime] = useState(0)
+  const [start, setStart] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (!start) {
+      return;
+    }
+    timerRef.current = setInterval(() => {
+      setTime(prevTime => prevTime + 1)
+    }, 10)
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [start])
+
   return (
     <ExerciseShell
       title="Timer"
       description="Start, stop, and reset timer with useEffect cleanup."
     >
-      <p>TODO: Implement timer</p>
+      {formatTime(time)}
+      <button onClick={() => setStart(true)}>Start</button>
+      <button onClick={() => setStart(false)}>Stop</button>
+      <button onClick={() => {
+        setStart(false)
+        setTime(0)
+      }}>Reset</button>
     </ExerciseShell>
   );
 }
