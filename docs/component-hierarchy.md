@@ -25,3 +25,18 @@ App
 **Props flow:**
 -
 -
+
+### Excercise: Timer
+
+```
+  ExerciseShell
+  └── Timer (display + 3 buttons)
+```
+
+### Excercise: Stopwatch
+
+```
+  ExerciseShell
+  └── Stopwatch (display + 2 buttons)
+    └── LapList
+```

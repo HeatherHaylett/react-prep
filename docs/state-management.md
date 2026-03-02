@@ -34,3 +34,27 @@ Document state management decisions for each exercise.
 **Why this pattern:**
 -
 -
+
+### Excercise: Timer
+
+**State shape:**
+```ts
+time: number (centiseconds), 
+start: boolean
+```
+
+**Why this pattern:**
+- useState is sufficient because we are not dependent on outside data
+- Interval ID is in useRef because it is not needed for rerending, useState would cause unnecessary rerenders.
+
+### Excercise: Stopwatch
+```ts
+time: number (centiseconds), 
+start: boolean
+laps: number[]
+```
+
+**Why this pattern:**
+- useState is sufficient because we are not dependent on outside data
+- Interval ID is in useRef because it is not needed for rerending, useState would cause unnecessary rerenders.
+- laps is an array of numbers

@@ -14,12 +14,16 @@ Quick reference for all exercises, what they cover, and key takeaways.
 ### 02 - Timer
 **Focus:** useEffect cleanup, intervals, shared utilities
 **Key concepts:**
--
+- A cleanup function is needed to stop the interval. Cleanup function runs each time before Effect runs again and when the component unmounts.
+- If we don't clear the interval in the cleanup function it will continue to run after unmount causing a memory leak.
 
 ### 03 - Stopwatch with Laps
 **Focus:** useRef for intervals, useCallback, lap tracking
 **Key concepts:**
--
+- useRef holds the ID for interval clearing. See above.
+- LapList is a memoized component and will skip rerender if laps hasn't changed.
+- Handlers handleReset and handleRecordLap implement useCallback. The latter needs time as a dependency because handleRecordLap closes over time, so time must be in the dependency array, otherwise it would always
+  record 0.
 
 ### 04 - Debounced Search
 **Focus:** Custom hooks, debouncing, controlled inputs

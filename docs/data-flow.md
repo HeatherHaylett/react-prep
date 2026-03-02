@@ -31,3 +31,17 @@ Document how data flows through components in each exercise.
 **Key observations:**
 -
 -
+
+### Excercise: Timer
+- No props drilling, all state is local
+- start state drives the useEffect, which updates time
+
+### Excercise: Stopwatch
+
+```
+Stopwatch → LapList
+```
+
+- Local state
+- useEffect checks if start has changed to start or stop interval
+- LapList takes an array of laps to display
