@@ -1,5 +1,5 @@
 import { ExerciseShell } from "../../components/ExerciseShell";
-import { SubmitEventHandler, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // GOAL: Build a multi-step form wizard
 // ACCEPTANCE CRITERIA:
@@ -25,11 +25,24 @@ export default function FormWizard() {
   const [step, setStep] = useState<Step>("personal");
   const [status, setStatus] = useState<Status>("typing");
 
-  const isButtonDisabled = step === "personal" ? !profile.userName.trim() : !profile.address.trim();
-
   function handleUpdateProfile(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }))
+  }
+
+  function handlePrev() {
+    if (stepState[step].prev) setStep(stepState[step].prev)
+  }
+
+  function handleNext(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (stepState[step].next) setStep(stepState[step].next)
+  }
+
+  function handleResetForm() {
+    setStatus("typing")
+    setStep("personal")
+    setProfile({ userName: "", address: "" })
   }
 
   const stepState: Record<Step, { next: Step | null; prev: Step | null }> = {
@@ -49,38 +62,25 @@ export default function FormWizard() {
 
   const stepComponents: Record<Step, () => React.ReactNode> = {
     personal: () => <Form
+      key="personal"
       name="userName"
       label="Name"
       value={profile.userName}
-      handleSubmit={handleNext}
+      onSubmit={handleNext}
       onChange={handleUpdateProfile}
     />,
     address: () => <Form
+      key="address"
       name="address"
       label="Address"
       value={profile.address}
-      handleSubmit={handleNext}
+      onSubmit={handleNext}
       onChange={handleUpdateProfile}
     />,
     review: () => <Review
       profile={profile}
       setStatus={setStatus}
     />,
-  }
-
-  function handlePrev() {
-    if (stepState[step].prev) setStep(stepState[step].prev)
-  }
-
-  function handleNext(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault()
-    if (stepState[step].next) setStep(stepState[step].next)
-  }
-
-  function handleResetForm() {
-    setStatus("typing")
-    setStep("personal")
-    setProfile({ userName: "", address: "" })
   }
 
   return (
@@ -98,8 +98,7 @@ export default function FormWizard() {
             <h1>{step.charAt(0).toUpperCase() + step.slice(1)}</h1>
             {stepComponents[step]()}
             <div>
-              <button onClick={handlePrev}>Prev</button>
-              <button disabled={isButtonDisabled} onClick={handleNext}>Next</button>
+              {step === "personal" ? null : <button type="button" onClick={handlePrev}>Prev</button>}
             </div>
           </>
         }
@@ -112,21 +111,29 @@ interface FormProps {
   label: string,
   name: string,
   value: string,
-  handleSubmit: React.FormEventHandler<HTMLFormElement>
+  onSubmit: React.FormEventHandler<HTMLFormElement>
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function Form({ label, name, value, handleSubmit, onChange }: FormProps) {
+function Form({ label, name, value, onSubmit, onChange }: FormProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, []);
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       {label}:
       <input
+        ref={inputRef}
         type="text"
         name={name}
         value={value}
         onChange={onChange}
       />
       <br />
+      <button type="submit" disabled={!value.length}>Next</button>
     </form>
   )
 }
@@ -138,14 +145,12 @@ interface ReviewProps {
 
 function Review({ profile, setStatus }: ReviewProps) {
   return (
-    <form>
+    <section>
       Name: {profile.userName}
-      {<br />}
+      <br />
       Address: {profile.address}
-      {<br />}
-      <button type="submit" onClick={() => setStatus("complete")}>
-        Submit
-      </button>
-    </form>
+      <br />
+      <button onClick={() => setStatus("complete")}>Submit</button>
+    </section>
   )
 }
