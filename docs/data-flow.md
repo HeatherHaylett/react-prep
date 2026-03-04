@@ -45,3 +45,14 @@ Stopwatch → LapList
 - Local state
 - useEffect checks if start has changed to start or stop interval
 - LapList takes an array of laps to display
+
+### Excercise: FormWizard
+
+```
+FormWizard → Form
+          ↘ Review
+```
+
+- Form takes local state profile and input calls onChange while setting new profile
+- onSubmit will call handleNext which changes local state step
+- Review takes the profile and displays data, onReset will change all local state back to initial values

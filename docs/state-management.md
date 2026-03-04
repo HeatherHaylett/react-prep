@@ -58,3 +58,29 @@ laps: number[]
 - useState is sufficient because we are not dependent on outside data
 - Interval ID is in useRef because it is not needed for rerending, useState would cause unnecessary rerenders.
 - laps is an array of numbers
+
+### Excercise: FormWizard
+```ts
+type Step = "personal" | "address" | "review";
+type Status = "typing" | "complete";
+interface Profile {
+  userName: string,
+  address: string,
+}
+interface FormProps {
+  label: string,
+  name: string,
+  value: string,
+  onSubmit: React.FormEventHandler<HTMLFormElement>
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+interface ReviewProps {
+  profile: Profile,
+  setStatus: React.Dispatch<React.SetStateAction<Status>>
+}
+const stepComponents: Record<Step, () => React.ReactNode>
+const stepState: Record<Step, { next: Step | null; prev: Step | null }>
+```
+
+**Why this pattern:**
+- Union types for Step and Status make invalid states unrepresentable — the compiler won't let you set step to an arbitrary string. The stepState record then maps each valid step to its navigation options, so the transition logic is data-driven rather than scattered across conditionals. This is a lightweight state machine: states are enumerated, transitions are explicit, and the UI derives entirely from current state.

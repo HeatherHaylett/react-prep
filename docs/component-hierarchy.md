@@ -40,3 +40,12 @@ App
   └── Stopwatch (display + 2 buttons)
     └── LapList
 ```
+
+### Excercise: FormWizard
+
+```
+  ExerciseShell
+  └── FormWizard (form or review, 3 buttons)
+    └── Form
+    └── Review
+```
