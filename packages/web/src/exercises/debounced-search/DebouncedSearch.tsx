@@ -36,10 +36,10 @@ export async function getCharacter(value: string, signal: AbortSignal | undefine
 }
 
 export default function DebouncedSearch() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
   const [charList, setCharList] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const controllerRef = useRef<AbortController | null>(null);
 
   const newSearch = useDebounce(query, 1000);
