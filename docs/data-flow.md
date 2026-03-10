@@ -56,3 +56,13 @@ FormWizard → Form
 - Form takes local state profile and input calls onChange while setting new profile
 - onSubmit will call handleNext which changes local state step
 - Review takes the profile and displays data, onReset will change all local state back to initial values
+
+### Excercise: DebouncedSearch
+
+```
+keystroke → query → (debounce 1000ms) → newSearch → useEffect → getCharacter → charList
+```
+
+- Input takes key stroke event and sets query to event.target.value
+- useDebounce is called on every render with query and a delay (1000ms), returning newSearch
+- useEffect looks for changes in newSearch and sets characterList after debounce processes

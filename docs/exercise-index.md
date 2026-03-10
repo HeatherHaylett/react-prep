@@ -28,7 +28,7 @@ Quick reference for all exercises, what they cover, and key takeaways.
 ### 04 - Debounced Search
 **Focus:** Custom hooks, debouncing, controlled inputs
 **Key concepts:**
--
+- custom debounce hook implements useState and useEffect to set a timeout that clears if a new query is passed and debouncedValue returns after timeout completes
 
 ### 05 - Virtualized List
 **Focus:** Windowing, performance optimization, large datasets

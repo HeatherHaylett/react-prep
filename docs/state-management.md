@@ -84,3 +84,17 @@ const stepState: Record<Step, { next: Step | null; prev: Step | null }>
 
 **Why this pattern:**
 - Union types for Step and Status make invalid states unrepresentable — the compiler won't let you set step to an arbitrary string. The stepState record then maps each valid step to its navigation options, so the transition logic is data-driven rather than scattered across conditionals. This is a lightweight state machine: states are enumerated, transitions are explicit, and the UI derives entirely from current state.
+
+### Excercise: DebouncedSearch
+
+```ts
+type Character = {
+  id: number
+  name: string
+}
+```
+
+**Why this pattern:**
+- Character is a minimal object type — only typing the fields actually used in the UI rather than the full API response
+- Character[] ensures characterList valid only with an array of objects that contain those properties
+- useState is sufficient for all state because there is no shared global state

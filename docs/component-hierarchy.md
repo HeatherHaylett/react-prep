@@ -49,3 +49,11 @@ App
     └── Form
     └── Review
 ```
+
+### Excercise: Debounced Search
+
+```
+  ExerciseShell
+  └── Input
+  └── Search result list
+```
