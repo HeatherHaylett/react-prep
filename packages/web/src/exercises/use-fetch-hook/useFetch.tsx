@@ -3,14 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 interface LoadingState<T> {
     data: T | null,
     loading: boolean,
-    error: Error | null
+    error: Error | null,
+    refetch: () => void
 }
 
 export const useFetch = <T,>(url: string): LoadingState<T> => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [data, setData] = useState<T | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
+    const [trigger, setTrigger] = useState(0);
     const controllerRef = useRef<AbortController | null>(null);
+    const refetch = () => setTrigger((prev) => (prev + 1));
 
     useEffect(() => {
         async function getData() {
@@ -25,7 +28,6 @@ export const useFetch = <T,>(url: string): LoadingState<T> => {
                     throw new Error(`Response status: ${response.status}`);
                 }
                 const result = await response.json();
-                console.log(result);
                 setData(result);
                 setLoading(false);
             } catch (error: any) {
@@ -41,7 +43,7 @@ export const useFetch = <T,>(url: string): LoadingState<T> => {
             controllerRef.current?.abort();
         }
 
-    }, [url])
+    }, [url, trigger])
 
-    return { data, loading, error }
+    return { data, loading, error, refetch }
 }

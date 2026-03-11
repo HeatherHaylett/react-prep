@@ -18,7 +18,7 @@ interface Todo {
 
 export default function UseFetchHook() {
 
-  const { data, loading, error } = useFetch<Todo[]>("https://jsonplaceholder.typicode.com/posts");
+  const { data, loading, error, refetch } = useFetch<Todo[]>("https://jsonplaceholder.typicode.com/todos");
 
   return (
     <ExerciseShell
@@ -26,9 +26,9 @@ export default function UseFetchHook() {
       description="Custom data-fetching hook with loading and error states."
     >
       <div>
-        {loading && "loading..."}
         {error && <p>{error.message}</p>}
-        {data && data.map((todo) => (
+        <button onClick={refetch}>Refresh Todo List</button>
+        {loading ? "loading..." : data?.map((todo) => (
           <div key={todo.id}>
             <p>{todo.title}</p>
           </div>
