@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-interface LoadingState<T> {
+type LoadingState<T> = {
     data: T | null,
     loading: boolean,
     error: Error | null,
