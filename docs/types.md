@@ -66,7 +66,7 @@ catch (err) {
 - `React.Dispatch<React.SetStateAction<T>>` for passing state setters as props
 - Keys on components force remount when swapping between same component type at same position
 
-### Excercise: DebouncedSearch
+### Exercise: DebouncedSearch
 
 **Types defined:**
 - Minimal object type for `type Character` types actually used in UI
@@ -74,6 +74,13 @@ catch (err) {
 **Lesson learned:**
 - `useRef<AbortController | null>` for AbortController props
 
+### Exercise: UseFetchHook
+
+**Types defined:**
+- Return type alias for `type LoadingState`
+
+**Lesson learned:**
+- `<T,>` passes a type into the hook to make it generic. The trailing comma is required in `.tsx` files because `<T>` alone is ambiguous with JSX syntax.
 
 
 

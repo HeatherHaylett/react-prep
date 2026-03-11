@@ -38,16 +38,19 @@ Quick reference for all exercises, what they cover, and key takeaways.
 ### 06 - Form Wizard
 **Focus:** Multi-step forms, validation, state machines
 **Key concepts:**
-- 
-
-### 07 - useFetch Hook
-**Focus:** Custom hooks, loading/error states, AbortController
-**Key concepts:**
 - Step-based state management with a data structure driving navigation
 - Per-step validation with disabled progression
 - Form submission with onSubmit and e.preventDefault()
 - Component keying to force remount on step change
 - Focus management with useRef and useEffect
+
+### 07 - useFetch Hook
+**Focus:** Custom hooks, loading/error states, AbortController
+**Key concepts:**
+- Component uses custom useFetch hook to retrieve data
+- Hook returns state to display error, loading, or data
+- Refresh button to call hook again with same url
+- AbortController to abort network call if subsequent request made
 
 ### 08 - Slow Component Optimization
 **Focus:** React.memo, useMemo, useCallback, profiling

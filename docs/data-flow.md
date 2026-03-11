@@ -66,3 +66,13 @@ keystroke → query → (debounce 1000ms) → newSearch → useEffect → getCha
 - Input takes key stroke event and sets query to event.target.value
 - useDebounce is called on every render with query and a delay (1000ms), returning newSearch
 - useEffect looks for changes in newSearch and sets characterList after debounce processes
+
+### Exercise: UseFetchHook
+
+```
+component mounts → useFetch hook → component receives { data, loading, error } → refresh button → trigger change calls useEffect
+```
+
+- When UseFetchHook mounts the useFetch hook returns LoadingState and component displays current state
+- If user clicks "Refresh Todo List" refetch increases trigger state in useFetch hook which runs useEffect
+- Before the new fetch starts, the useEffect cleanup aborts any in-flight request from the previous run

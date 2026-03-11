@@ -98,3 +98,19 @@ type Character = {
 - Character is a minimal object type — only typing the fields actually used in the UI rather than the full API response
 - Character[] ensures characterList valid only with an array of objects that contain those properties
 - useState is sufficient for all state because there is no shared global state
+
+### Exercise: UseFetchHook
+
+```ts
+type LoadingState<T> = {
+    data: T | null,
+    loading: boolean,
+    error: Error | null,
+    refetch: () => void
+}
+```
+
+**Why this pattern:**
+- LoadingState is a return type alias that accepts a generic type from the argument passed to useFetch hook
+- useState is sufficient for all state because there is no shared global state
+- useRef holds the AbortController because it needs to persist across renders but changing it should not trigger a rerender
