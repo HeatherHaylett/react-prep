@@ -80,7 +80,7 @@ export default function KanbanBoard() {
     draggingRef.current = id;
   }
 
-  function handleDragEnter(status) {
+  function handleDrop(status) {
     handleUpdateCard(draggingRef.current, status);
   }
 
@@ -91,30 +91,27 @@ export default function KanbanBoard() {
     >
       <div style={{ display: 'flex' }}>
         <Column
-          key="todo"
           title="Todo"
           status="todo"
           cards={cards}
           handleDeleteCard={handleDeleteCard}
-          handleDragEnter={handleDragEnter}
+          handleDrop={handleDrop}
           handleDragStart={handleDragStart}
         />
         <Column
-          key="progress"
           title="In Progress"
           status="progress"
           cards={cards}
           handleDeleteCard={handleDeleteCard}
-          handleDragEnter={handleDragEnter}
+          handleDrop={handleDrop}
           handleDragStart={handleDragStart}
         />
         <Column
-          key="done"
           title="Done"
           status="done"
           cards={cards}
           handleDeleteCard={handleDeleteCard}
-          handleDragEnter={handleDragEnter}
+          handleDrop={handleDrop}
           handleDragStart={handleDragStart}
         />
       </div>
@@ -163,14 +160,14 @@ function NewCard({ handleAddCard }) {
   )
 }
 
-function Column({ cards, handleDeleteCard, handleDragEnter, handleDragStart, title, status }) {
+function Column({ cards, handleDeleteCard, handleDrop, handleDragStart, title, status }) {
 
   const visibleCards = cards.filter((card) => card.status === status);
 
   return (
     <div style={{ border: '1px solid #ccc', width: "30%" }}
-      key={status}
-      onDragEnter={() => handleDragEnter(status)}
+      onDrop={() => handleDrop(status)}
+      onDragOver={(e) => e.preventDefault()}
     >
       <h1>{title}</h1>
       {visibleCards.length > 0 && visibleCards.map((card) =>
