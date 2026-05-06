@@ -20,7 +20,7 @@ function cardsReducer(cards, action) {
     case 'update': {
       return cards.map((card) => {
         if (card.id === action.card.id) {
-          return {...action.card, status: action.card.status }
+          return { ...card, status: action.card.status }
         } else {
           return card;
         }
@@ -43,6 +43,7 @@ export default function KanbanBoard() {
     []
   );
   const idRef = useRef(1);
+  const [dragging, setDragging] = useState(null);
 
   function handleUpdateCard(id, status) {
     dispatch({
@@ -75,6 +76,14 @@ export default function KanbanBoard() {
     })
   }
 
+  function handleDragStart(id) {
+    setDragging(id);
+  }
+
+  function handleDragEnter(status) {
+    handleUpdateCard(dragging, status);
+  }
+
   return (
     <ExerciseShell
       title="Kanban Board"
@@ -88,6 +97,8 @@ export default function KanbanBoard() {
           status="todo"
           cards={cards}
           handleDeleteCard={handleDeleteCard}
+          handleDragEnter={handleDragEnter}
+          handleDragStart={handleDragStart}
         />
         <Column
           key="progress"
@@ -95,6 +106,8 @@ export default function KanbanBoard() {
           status="progress"
           cards={cards}
           handleDeleteCard={handleDeleteCard}
+          handleDragEnter={handleDragEnter}
+          handleDragStart={handleDragStart}
         />
         <Column
           key="done"
@@ -102,6 +115,8 @@ export default function KanbanBoard() {
           status="done"
           cards={cards}
           handleDeleteCard={handleDeleteCard}
+          handleDragEnter={handleDragEnter}
+          handleDragStart={handleDragStart}
         />
       </div>
       <NewCard handleAddCard={handleAddCard} />
@@ -149,12 +164,16 @@ function NewCard({ handleAddCard }) {
   )
 }
 
-function Column({ cards, handleDeleteCard, title, status }) {
+function Column({ cards, handleDeleteCard, handleDragEnter, handleDragStart, title, status }) {
+
   return (
-    <div style={{ border: '1px solid #ccc', width: "30%" }}>
+    <div style={{ border: '1px solid #ccc', width: "30%" }}
+      key={status}
+      onDragEnter={() => handleDragEnter(status)}
+    >
       <ColumnHeader title={title} />
       {cards.length > 0 && cards.filter((card) => card.status === status).map((card) =>
-        <Card key={card.id} id={card.id} card={card} handleDeleteCard={handleDeleteCard} />
+        <Card key={card.id} id={card.id} card={card} handleDeleteCard={handleDeleteCard} handleDragStart={handleDragStart} />
       )}
     </div>
   )
@@ -166,9 +185,12 @@ function ColumnHeader({ title }) {
   )
 }
 
-function Card({ card, handleDeleteCard }) {
+function Card({ card, handleDeleteCard, handleDragStart }) {
+
   return (
     <div
+      draggable
+      onDragStart={() => handleDragStart(card.id)}
       style={{
         margin: 8,
         padding: 8,
