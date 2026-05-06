@@ -165,22 +165,18 @@ function NewCard({ handleAddCard }) {
 
 function Column({ cards, handleDeleteCard, handleDragEnter, handleDragStart, title, status }) {
 
+  const visibleCards = cards.filter((card) => card.status === status);
+
   return (
     <div style={{ border: '1px solid #ccc', width: "30%" }}
       key={status}
       onDragEnter={() => handleDragEnter(status)}
     >
-      <ColumnHeader title={title} />
-      {cards.length > 0 && cards.filter((card) => card.status === status).map((card) =>
-        <Card key={card.id} card={card} handleDeleteCard={handleDeleteCard} handleDragStart={handleDragStart} />
-      )}
+      <h1>{title}</h1>
+      {visibleCards.length > 0 && visibleCards.map((card) =>
+      <Card key={card.id} card={card} handleDeleteCard={handleDeleteCard} handleDragStart={handleDragStart} />
+    )}
     </div>
-  )
-}
-
-function ColumnHeader({ title }) {
-  return (
-    <h1>{title}</h1>
   )
 }
 
