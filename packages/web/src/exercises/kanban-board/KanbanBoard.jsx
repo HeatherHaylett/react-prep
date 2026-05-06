@@ -1,5 +1,5 @@
 import { ExerciseShell } from "../../components/ExerciseShell";
-import { useId, useReducer, useRef, useState } from 'react';
+import { useReducer, useRef, useState } from 'react';
 
 // GOAL: Build a kanban board with drag-and-drop
 // ACCEPTANCE CRITERIA:
@@ -43,7 +43,7 @@ export default function KanbanBoard() {
     []
   );
   const idRef = useRef(1);
-  const [dragging, setDragging] = useState(null);
+  const draggingRef = useRef(null)
 
   function handleUpdateCard(id, status) {
     dispatch({
@@ -77,11 +77,11 @@ export default function KanbanBoard() {
   }
 
   function handleDragStart(id) {
-    setDragging(id);
+    draggingRef.current = id;
   }
 
   function handleDragEnter(status) {
-    handleUpdateCard(dragging, status);
+    handleUpdateCard(draggingRef.current, status);
   }
 
   return (
@@ -89,7 +89,6 @@ export default function KanbanBoard() {
       title="Kanban Board"
       description="Drag-and-drop kanban board with TypeScript."
     >
-      <p>TODO: Implement kanban board</p>
       <div style={{ display: 'flex' }}>
         <Column
           key="todo"
@@ -173,7 +172,7 @@ function Column({ cards, handleDeleteCard, handleDragEnter, handleDragStart, tit
     >
       <ColumnHeader title={title} />
       {cards.length > 0 && cards.filter((card) => card.status === status).map((card) =>
-        <Card key={card.id} id={card.id} card={card} handleDeleteCard={handleDeleteCard} handleDragStart={handleDragStart} />
+        <Card key={card.id} card={card} handleDeleteCard={handleDeleteCard} handleDragStart={handleDragStart} />
       )}
     </div>
   )
